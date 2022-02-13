@@ -9,6 +9,7 @@ const Intern = require('./lib/Intern');
 // include node
 const fs = require('fs');
 const inquirer = require('inquirer');
+const Employee = require('./lib/Employee');
 
 // initialize team array
 const teamArray = [];
@@ -163,4 +164,47 @@ const addEmployee = () => {
             default: false
         }
     ])
-}
+    .then(employeeData => {
+        let { name, id, email, role, github, school, confrimAddEmployee } = employeeData;
+        let employee;
+
+        if (role === "Engineer") {
+            employee = new Engineer (name, id, email, github);
+            console.log(employee);
+        } else if (role === "Intern") {
+            employee = new Intern (name, id, email, school);
+            console.log(employee);
+        }
+        teamArray.push(employee);
+
+        if (confrimAddEmployee) {
+            return addEmployee(teamArray);
+        } else {
+            return teamArray;
+        }
+    })
+};
+
+// generate HTML
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("Your team profile has successfully been created! Please see 'index.html'.");
+        }
+    })
+};
+
+addManager()
+    .then(addEmployee)
+    .then(teamArray => {
+        return generateHTML(teamArray);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    });
