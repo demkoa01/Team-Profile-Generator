@@ -31,7 +31,7 @@ const generateEngineer = function(engineer) {
             <div class="card-header">
                 <p class="id">ID: ${engineer.id}</p>
                 <p class="email">E-Mail: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-                <p class="github">Github Account: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
+                <p class="github">Github Account: <a target="blank" href="https://github.com/${engineer.github}">${engineer.github}</a></p>
             </div>
         </div>
     </div>
