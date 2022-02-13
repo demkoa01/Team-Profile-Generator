@@ -176,10 +176,11 @@ const addEmployee = () => {
             employee = new Intern (name, id, email, school);
             console.log(employee);
         }
+
         teamArray.push(employee);
 
         if (confrimAddEmployee) {
-            return addEmployee();
+            return addEmployee(teamArray);
         } else {
             return teamArray;
         }
