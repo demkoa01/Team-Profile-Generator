@@ -9,7 +9,6 @@ const Intern = require('./lib/Intern');
 // include node
 const fs = require('fs');
 const inquirer = require('inquirer');
-const Employee = require('./lib/Employee');
 
 // initialize team array
 const teamArray = [];
@@ -135,6 +134,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'github',
             message: "Please enter the employee's github username.",
+            when: (input) => input.role === "Engineer",
             validate: nameInput => {
                 if (nameInput) {
                     return true;
@@ -148,6 +148,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'school',
             message: "Please enter the intern's school.",
+            when: (input) => input.role === "Intern",
             validate: nameInput => {
                 if (nameInput) {
                     return true;
@@ -178,7 +179,7 @@ const addEmployee = () => {
         teamArray.push(employee);
 
         if (confrimAddEmployee) {
-            return addEmployee(teamArray);
+            return addEmployee();
         } else {
             return teamArray;
         }
