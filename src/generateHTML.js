@@ -8,8 +8,8 @@ const generateTeam = team => {
         <div class="col-4 mt-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h3>Manager</h3><i class="material-icons">content_paste</i>
-                    <h4>${manager.getName()}</h4>
+                    <h3>${manager.getName()}</h3>
+                    <h4>Manager</h4><i class="material-icons">content_paste</i>
                 </div>
 
                 <div class="card-header">
@@ -28,8 +28,8 @@ const generateTeam = team => {
         <div class="col-4 mt-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h3>Engineer</h3><i class="material-icons">content_paste</i>
-                    <h4>${engineer.getName()}</h4>
+                    <h3>${engineer.getName()}</h3>
+                    <h4>Engineer</h4><i class="material-icons">content_paste</i>
                 </div>
 
                 <div class="card-header">
@@ -48,8 +48,8 @@ const generateTeam = team => {
         <div class="col-4 mt-4">
             <div class="card h-100">
                 <div class="card-header">
-                    <h3>Intern</h3><i class="material-icons">content_paste</i>
-                    <h4>${intern.getName()}</h4>
+                    <h3>${intern.getName()}</h3>
+                    <h4>Intern</h4><i class="material-icons">content_paste</i>
                 </div>
 
                 <div class="card-header">
