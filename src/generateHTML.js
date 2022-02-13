@@ -1,93 +1,88 @@
-// manager card
-const generateManager = function(manager) {
-    return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header>
-                <h3>${manager.name}</h3>
-                <h4>Manager</h4><i class="material-icons">content_paste</i>
-            </div>
+// const Employee = require("../lib/Employee");
 
-            <div class="card-header">
-                <p class="id">ID: ${manager.id}</p>
-                <p class="email">E-Mail: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                <p class="office">Office Number: ${manager.officeNumber}</p>
-            </div>
-        </div>
-    </div>
-    `;
-}
+const generateTeam = team => {
 
-// enegineer card
-const generateEngineer = function(engineer) {
-    return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header>
-                <h3>${engineer.name}</h3>
-                <h4>Engineer</h4><i class="material-icons">content_paste</i>
-            </div>
+    // manager card
+    const generateManager = manager => {
+        return `
+        <div class="col-4 mt-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3>Manager</h3><i class="material-icons">content_paste</i>
+                    <h4>${manager.getName()}</h4>
+                </div>
 
-            <div class="card-header">
-                <p class="id">ID: ${engineer.id}</p>
-                <p class="email">E-Mail: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-                <p class="github">Github Account: <a target="blank" href="https://github.com/${engineer.github}">${engineer.github}</a></p>
+                <div class="card-header">
+                    <p class="id">ID: ${manager.getId()}</p>
+                    <p class="email">E-Mail: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></p>
+                    <p class="office">Office Number: ${manager.officeNumber}</p>
+                </div>
             </div>
         </div>
-    </div>
-    `;
-}
+        `;
+    };
 
-// intern card
-const generateIntern = function(intern) {
-    return `
-    <div class="col-4 mt-4">
-        <div class="card h-100">
-            <div class="card-header>
-                <h3>${intern.name}</h3>
-                <h4>Intern</h4><i class="material-icons">content_paste</i>
-            </div>
+    // engineer card
+    const generateEngineer = engineer => {
+        return `
+        <div class="col-4 mt-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3>Engineer</h3><i class="material-icons">content_paste</i>
+                    <h4>${engineer.getName()}</h4>
+                </div>
 
-            <div class="card-header">
-                <p class="id">ID: ${intern.id}</p>
-                <p class="email">E-Mail: <a href="mailto:${intern.email}">${intern.email}</a></p>
-                <p class="school">School: ${intern.school}</p>
+                <div class="card-header">
+                    <p class="id">ID: ${engineer.getId()}</p>
+                    <p class="email">E-Mail: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></p>
+                    <p class="github">Github Account: <a target="blank" href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></p>
+                </div>
             </div>
         </div>
-    </div>
-    `;
-}
+        `;
+    };
 
-// push to page
-generateHTML = (data) => {
-    pageArray = [];
+    // intern card
+    const generateIntern = intern => {
+        return `
+        <div class="col-4 mt-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3>Intern</h3><i class="material-icons">content_paste</i>
+                    <h4>${intern.getName()}</h4>
+                </div>
 
-    for(let i=0; i<data.length; i++) {
-        const employee = data[i];
-        const role = employee.getRole[i];
-
-        if(role === "Manager") {
-            const managerCard = generateManager(employee);
-            pageArray.push(managerCard);
-        }
-        if(role === "Engineer") {
-            const engineerCard = generateEngineer(employee);
-            pageArray.push(engineerCard);
-        }
-        if(role === "Intern") {
-            const internCard = generateIntern(employee);
-            pageArray.push(internCard);
-        }
+                <div class="card-header">
+                    <p class="id">ID: ${intern.getId()}</p>
+                    <p class="email">E-Mail: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></p>
+                    <p class="school">School: ${intern.getSchool()}</p>
+                </div>
+            </div>
+        </div>
+        `;
     }
 
-    // join strings of data together
-    const employeeCards = pageArray.join('');
-    const generateTeam = generateTeamPage(employeeCards);
-    return generateTeam;
+    pageArray = [];
+
+    pageArray.push(team
+        .filter(employee => employee.getRole() === "Manager")
+        .map(manager => generateManager(manager))
+    );
+    pageArray.push(team
+        .filter(employee => employee.getRole() === "Engineer")
+        .map(engineer => generateEngineer(engineer))
+        .join("")
+    );
+    pageArray.push(team
+        .filter(employee => employee.getRole() === "Intern")
+        .map(intern => generateIntern(intern))
+        .join("")
+    );
+
+    return pageArray.join("");
 }
 
-//make html page
-const generateTeamPage = function(employeeCards) {
+module.exports = team => {
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -111,7 +106,7 @@ const generateTeamPage = function(employeeCards) {
             <div class="container">
                 <div class="row justify-content-center" id="team-cards">
                     <!--Team Cards-->
-                    ${employeeCards}
+                    ${generateTeam(team)}
                 </div>
             </div>
         </main>
@@ -122,7 +117,4 @@ const generateTeamPage = function(employeeCards) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     </html>
     `;
-}
-
-// export
-module.exports = generateHTML;
+};
